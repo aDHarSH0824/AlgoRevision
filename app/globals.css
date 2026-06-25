@@ -1,26 +1,126 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* GitHub Light + LeetCode Light Palette */
+  --color-canvas: #f6f8fa;
+  --color-primary: #e87a15; /* LeetCode Orange */
+  --color-primary-active: #cf620c;
+  --color-primary-disabled: #f1ebd9;
+  --color-ink: #1f2328; /* GitHub Text color */
+  --color-body: #57606a;
+  --color-body-strong: #24292f;
+  --color-muted: #6e7781;
+  --color-muted-soft: #8c959f;
+  --color-hairline: #d0d7de;
+  --color-hairline-soft: #ebf0f4;
+  
+  --color-surface-soft: #f3f4f6;
+  --color-surface-card: #ffffff;
+  --color-surface-cream-strong: #e1e4e8;
+  --color-surface-dark: #24292f;
+  --color-surface-dark-elevated: #2f363d;
+  --color-surface-dark-soft: #1b1f23;
+  
+  --color-on-primary: #ffffff;
+  --color-on-dark: #f0f6fc;
+  --color-on-dark-soft: #8c959f;
+  
+  --color-accent-teal: #0969da; /* GitHub Blue */
+  --color-accent-amber: #e3b341;
+  --color-success: #1a7f37; /* GitHub Green */
+  --color-warning: #9a6700;
+  --color-error: #cf222e; /* GitHub Red */
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    /* GitHub Dark + LeetCode Dark Palette */
+    --color-canvas: #0d1117;
+    --color-primary: #ffa116; /* LeetCode Orange Dark */
+    --color-primary-active: #d67f00;
+    --color-primary-disabled: #2d261b;
+    --color-ink: #e6edf3; /* GitHub Dark text */
+    --color-body: #8b949e;
+    --color-body-strong: #c9d1d9;
+    --color-muted: #6e7681;
+    --color-muted-soft: #484f58;
+    --color-hairline: #30363d;
+    --color-hairline-soft: #21262d;
+    
+    --color-surface-soft: #161b22;
+    --color-surface-card: #161b22;
+    --color-surface-cream-strong: #21262d;
+    --color-surface-dark: #161b22;
+    --color-surface-dark-elevated: #21262d;
+    --color-surface-dark-soft: #0d1117;
+    
+    --color-on-primary: #0d1117;
+    --color-on-dark: #f0f6fc;
+    --color-on-dark-soft: #8b949e;
+    
+    --color-accent-teal: #58a6ff; /* GitHub Blue Dark */
+    --color-accent-amber: #d29922;
+    --color-success: #238636; /* GitHub Green Dark */
+    --color-warning: #d29922;
+    --color-error: #f85149; /* GitHub Red Dark */
   }
 }
 
+@theme {
+  /* Register custom color mappings so existing classes function cleanly */
+  --color-canvas: var(--color-canvas);
+  --color-primary: var(--color-primary);
+  --color-primary-active: var(--color-primary-active);
+  --color-primary-disabled: var(--color-primary-disabled);
+  --color-ink: var(--color-ink);
+  --color-body: var(--color-body);
+  --color-body-strong: var(--color-body-strong);
+  --color-muted: var(--color-muted);
+  --color-muted-soft: var(--color-muted-soft);
+  --color-hairline: var(--color-hairline);
+  --color-hairline-soft: var(--color-hairline-soft);
+  
+  --color-surface-soft: var(--color-surface-soft);
+  --color-surface-card: var(--color-surface-card);
+  --color-surface-cream-strong: var(--color-surface-cream-strong);
+  --color-surface-dark: var(--color-surface-dark);
+  --color-surface-dark-elevated: var(--color-surface-dark-elevated);
+  --color-surface-dark-soft: var(--color-surface-dark-soft);
+  
+  --color-on-primary: var(--color-on-primary);
+  --color-on-dark: var(--color-on-dark);
+  --color-on-dark-soft: var(--color-on-dark-soft);
+  
+  --color-accent-teal: var(--color-accent-teal);
+  --color-accent-amber: var(--color-accent-amber);
+  --color-success: var(--color-success);
+  --color-warning: var(--color-warning);
+  --color-error: var(--color-error);
+
+  /* Shift from editorial serif typography to modern developer sans-serif typography */
+  --font-serif: var(--font-sans), ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-sans: var(--font-sans), Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: var(--font-mono), JetBrains Mono, SFMono-Regular, Consolas, monospace;
+
+  /* Border Radii */
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-pill: 9999px;
+
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-canvas);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* Notebook paper pattern background for revision cards */
+.card-dotted-grid {
+  background-image: radial-gradient(var(--color-hairline) 1.2px, transparent 1.2px);
+  background-size: 16px 16px;
 }

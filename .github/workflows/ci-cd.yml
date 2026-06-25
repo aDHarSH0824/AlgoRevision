@@ -1,0 +1,49 @@
+name: DSA Revision Hub CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  validate-and-build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      # Validate Backend Build
+      - name: Install Backend Dependencies
+        run: |
+          cd backend
+          npm ci
+
+      - name: Compile Backend TypeScript
+        run: |
+          cd backend
+          npm run build
+
+      # Validate Frontend Build
+      - name: Install Frontend Dependencies
+        run: |
+          npm ci
+
+      - name: Build Next.js Application
+        run: |
+          npm run build
+
+      # Verify Docker Setup compiles
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Test Docker Compose File Syntax
+        run: |
+          docker compose config
