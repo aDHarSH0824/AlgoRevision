@@ -21,42 +21,124 @@ interface TestQuestion {
 
 const DEFAULT_PATTERN_QUESTIONS: { [patternName: string]: Array<{ title: string; difficulty: "Easy" | "Medium" | "Hard"; platform: string; url: string }> } = {
   "sliding window": [
-    { title: "Leetcode 3: Longest Substring Without Repeating Characters", difficulty: "Medium", platform: "LeetCode", url: "https://leetcode.com/problems/longest-substring-without-repeating-characters/" },
-    { title: "Leetcode 209: Minimum Size Subarray Sum", difficulty: "Medium", platform: "LeetCode", url: "https://leetcode.com/problems/minimum-size-subarray-sum/" },
-    { title: "Leetcode 76: Minimum Window Substring", difficulty: "Hard", platform: "LeetCode", url: "https://leetcode.com/problems/minimum-window-substring/" },
-    { title: "Leetcode 438: Find All Anagrams in a String", difficulty: "Medium", platform: "LeetCode", url: "https://leetcode.com/problems/find-all-anagrams-in-a-string/" },
-    { title: "Leetcode 567: Permutation in String", difficulty: "Medium", platform: "LeetCode", url: "https://leetcode.com/problems/permutation-in-string/" }
+    { title: "Longest Substring Without Repeating Characters", difficulty: "Medium", platform: "LeetCode", url: "https://leetcode.com/problems/longest-substring-without-repeating-characters/" },
+    { title: "Minimum Size Subarray Sum", difficulty: "Medium", platform: "LeetCode", url: "https://leetcode.com/problems/minimum-size-subarray-sum/" },
+    { title: "Minimum Window Substring", difficulty: "Hard", platform: "LeetCode", url: "https://leetcode.com/problems/minimum-window-substring/" },
+    { title: "Find All Anagrams in a String", difficulty: "Medium", platform: "LeetCode", url: "https://leetcode.com/problems/find-all-anagrams-in-a-string/" },
+    { title: "Permutation in String", difficulty: "Medium", platform: "LeetCode", url: "https://leetcode.com/problems/permutation-in-string/" },
+    { title: "Max Consecutive Ones III", difficulty: "Medium", platform: "LeetCode", url: "https://leetcode.com/problems/max-consecutive-ones-iii/" }
   ],
   "two pointers": [
-    { title: "Leetcode 125: Valid Palindrome", difficulty: "Easy", platform: "LeetCode", url: "https://leetcode.com/problems/valid-palindrome/" },
-    { title: "Leetcode 167: Two Sum II - Input Array Is Sorted", difficulty: "Medium", platform: "LeetCode", url: "https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/" },
-    { title: "Leetcode 15: 3Sum", difficulty: "Medium", platform: "LeetCode", url: "https://leetcode.com/problems/3sum/" },
-    { title: "Leetcode 11: Container With Most Water", difficulty: "Medium", platform: "LeetCode", url: "https://leetcode.com/problems/container-with-most-water/" },
-    { title: "Leetcode 42: Trapping Rain Water", difficulty: "Hard", platform: "LeetCode", url: "https://leetcode.com/problems/trapping-rain-water/" }
+    { title: "Valid Palindrome", difficulty: "Easy", platform: "LeetCode", url: "https://leetcode.com/problems/valid-palindrome/" },
+    { title: "Two Sum II - Input Array Is Sorted", difficulty: "Medium", platform: "LeetCode", url: "https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/" },
+    { title: "3Sum", difficulty: "Medium", platform: "LeetCode", url: "https://leetcode.com/problems/3sum/" },
+    { title: "Container With Most Water", difficulty: "Medium", platform: "LeetCode", url: "https://leetcode.com/problems/container-with-most-water/" },
+    { title: "Trapping Rain Water", difficulty: "Hard", platform: "LeetCode", url: "https://leetcode.com/problems/trapping-rain-water/" },
+    { title: "Remove Duplicates from Sorted Array", difficulty: "Easy", platform: "LeetCode", url: "https://leetcode.com/problems/remove-duplicates-from-sorted-array/" }
   ],
   "fast & slow pointers": [
-    { title: "Leetcode 141: Linked List Cycle", difficulty: "Easy", platform: "LeetCode", url: "https://leetcode.com/problems/linked-list-cycle/" },
-    { title: "Leetcode 142: Linked List Cycle II", difficulty: "Medium", platform: "LeetCode", url: "https://leetcode.com/problems/linked-list-cycle-ii/" },
-    { title: "Leetcode 202: Happy Number", difficulty: "Easy", platform: "LeetCode", url: "https://leetcode.com/problems/happy-number/" },
-    { title: "Leetcode 876: Middle of the Linked List", difficulty: "Easy", platform: "LeetCode", url: "https://leetcode.com/problems/middle-of-the-linked-list/" },
-    { title: "Leetcode 234: Palindrome Linked List", difficulty: "Easy", platform: "LeetCode", url: "https://leetcode.com/problems/palindrome-linked-list/" }
+    { title: "Linked List Cycle", difficulty: "Easy", platform: "LeetCode", url: "https://leetcode.com/problems/linked-list-cycle/" },
+    { title: "Linked List Cycle II", difficulty: "Medium", platform: "LeetCode", url: "https://leetcode.com/problems/linked-list-cycle-ii/" },
+    { title: "Happy Number", difficulty: "Easy", platform: "LeetCode", url: "https://leetcode.com/problems/happy-number/" },
+    { title: "Middle of the Linked List", difficulty: "Easy", platform: "LeetCode", url: "https://leetcode.com/problems/middle-of-the-linked-list/" },
+    { title: "Palindrome Linked List", difficulty: "Easy", platform: "LeetCode", url: "https://leetcode.com/problems/palindrome-linked-list/" }
+  ],
+  "merge intervals": [
+    { title: "Merge Intervals", difficulty: "Medium", platform: "LeetCode", url: "https://leetcode.com/problems/merge-intervals/" },
+    { title: "Insert Interval", difficulty: "Medium", platform: "LeetCode", url: "https://leetcode.com/problems/insert-interval/" },
+    { title: "Non-overlapping Intervals", difficulty: "Medium", platform: "LeetCode", url: "https://leetcode.com/problems/non-overlapping-intervals/" },
+    { title: "Meeting Rooms", difficulty: "Easy", platform: "LintCode", url: "https://www.lintcode.com/problem/920/" },
+    { title: "Meeting Rooms II", difficulty: "Medium", platform: "LintCode", url: "https://www.lintcode.com/problem/919/" }
+  ],
+  "in-place reversal of a linked list": [
+    { title: "Reverse Linked List", difficulty: "Easy", platform: "LeetCode", url: "https://leetcode.com/problems/reverse-linked-list/" },
+    { title: "Reverse Linked List II", difficulty: "Medium", platform: "LeetCode", url: "https://leetcode.com/problems/reverse-linked-list-ii/" },
+    { title: "Reverse Nodes in k-Group", difficulty: "Hard", platform: "LeetCode", url: "https://leetcode.com/problems/reverse-nodes-in-k-group/" }
+  ],
+  "tree dfs": [
+    { title: "Maximum Depth of Binary Tree", difficulty: "Easy", platform: "LeetCode", url: "https://leetcode.com/problems/maximum-depth-of-binary-tree/" },
+    { title: "Path Sum", difficulty: "Easy", platform: "LeetCode", url: "https://leetcode.com/problems/path-sum/" },
+    { title: "Path Sum II", difficulty: "Medium", platform: "LeetCode", url: "https://leetcode.com/problems/path-sum-ii/" },
+    { title: "Binary Tree Maximum Path Sum", difficulty: "Hard", platform: "LeetCode", url: "https://leetcode.com/problems/binary-tree-maximum-path-sum/" },
+    { title: "Symmetric Tree", difficulty: "Easy", platform: "LeetCode", url: "https://leetcode.com/problems/symmetric-tree/" }
+  ],
+  "tree bfs": [
+    { title: "Binary Tree Level Order Traversal", difficulty: "Medium", platform: "LeetCode", url: "https://leetcode.com/problems/binary-tree-level-order-traversal/" },
+    { title: "Binary Tree Zigzag Level Order Traversal", difficulty: "Medium", platform: "LeetCode", url: "https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/" },
+    { title: "Binary Tree Right Side View", difficulty: "Medium", platform: "LeetCode", url: "https://leetcode.com/problems/binary-tree-right-side-view/" },
+    { title: "Populating Next Right Pointers in Each Node", difficulty: "Medium", platform: "LeetCode", url: "https://leetcode.com/problems/populating-next-right-pointers-in-each-node/" }
+  ],
+  "two heaps": [
+    { title: "Find Median from Data Stream", difficulty: "Hard", platform: "LeetCode", url: "https://leetcode.com/problems/find-median-from-data-stream/" },
+    { title: "Sliding Window Median", difficulty: "Hard", platform: "LeetCode", url: "https://leetcode.com/problems/sliding-window-median/" },
+    { title: "IPO", difficulty: "Hard", platform: "LeetCode", url: "https://leetcode.com/problems/ipo/" }
+  ],
+  "top k elements": [
+    { title: "Kth Largest Element in an Array", difficulty: "Medium", platform: "LeetCode", url: "https://leetcode.com/problems/kth-largest-element-in-an-array/" },
+    { title: "Top K Frequent Elements", difficulty: "Medium", platform: "LeetCode", url: "https://leetcode.com/problems/top-k-frequent-elements/" },
+    { title: "K Closest Points to Origin", difficulty: "Medium", platform: "LeetCode", url: "https://leetcode.com/problems/k-closest-points-to-origin/" },
+    { title: "Kth Largest Element in a Stream", difficulty: "Easy", platform: "LeetCode", url: "https://leetcode.com/problems/kth-largest-element-in-a-stream/" }
+  ],
+  "k-way merge": [
+    { title: "Merge k Sorted Lists", difficulty: "Hard", platform: "LeetCode", url: "https://leetcode.com/problems/merge-k-sorted-lists/" },
+    { title: "Find K Pairs with Smallest Sums", difficulty: "Medium", platform: "LeetCode", url: "https://leetcode.com/problems/find-k-pairs-with-smallest-sums/" },
+    { title: "Kth Smallest Element in a Sorted Matrix", difficulty: "Medium", platform: "LeetCode", url: "https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/" }
+  ],
+  "topological sort": [
+    { title: "Course Schedule", difficulty: "Medium", platform: "LeetCode", url: "https://leetcode.com/problems/course-schedule/" },
+    { title: "Course Schedule II", difficulty: "Medium", platform: "LeetCode", url: "https://leetcode.com/problems/course-schedule-ii/" },
+    { title: "Minimum Height Trees", difficulty: "Medium", platform: "LeetCode", url: "https://leetcode.com/problems/minimum-height-trees/" },
+    { title: "Alien Dictionary", difficulty: "Hard", platform: "LintCode", url: "https://www.lintcode.com/problem/892/" }
+  ],
+  "modified binary search": [
+    { title: "Binary Search", difficulty: "Easy", platform: "LeetCode", url: "https://leetcode.com/problems/binary-search/" },
+    { title: "Search in Rotated Sorted Array", difficulty: "Medium", platform: "LeetCode", url: "https://leetcode.com/problems/search-in-rotated-sorted-array/" },
+    { title: "Find First and Last Position of Element in Sorted Array", difficulty: "Medium", platform: "LeetCode", url: "https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/" },
+    { title: "Search a 2D Matrix", difficulty: "Medium", platform: "LeetCode", url: "https://leetcode.com/problems/search-a-2d-matrix/" }
+  ],
+  "dynamic programming": [
+    { title: "Climbing Stairs", difficulty: "Easy", platform: "LeetCode", url: "https://leetcode.com/problems/climbing-stairs/" },
+    { title: "Coin Change", difficulty: "Medium", platform: "LeetCode", url: "https://leetcode.com/problems/coin-change/" },
+    { title: "Longest Increasing Subsequence", difficulty: "Medium", platform: "LeetCode", url: "https://leetcode.com/problems/longest-increasing-subsequence/" },
+    { title: "House Robber", difficulty: "Medium", platform: "LeetCode", url: "https://leetcode.com/problems/house-robber/" },
+    { title: "0-1 Knapsack Problem", difficulty: "Medium", platform: "GeeksforGeeks", url: "https://www.geeksforgeeks.org/0-1-knapsack-problem-dp-10/" }
+  ],
+  "backtracking": [
+    { title: "Subsets", difficulty: "Medium", platform: "LeetCode", url: "https://leetcode.com/problems/subsets/" },
+    { title: "Permutations", difficulty: "Medium", platform: "LeetCode", url: "https://leetcode.com/problems/permutations/" },
+    { title: "Combination Sum", difficulty: "Medium", platform: "LeetCode", url: "https://leetcode.com/problems/combination-sum/" },
+    { title: "N-Queens", difficulty: "Hard", platform: "LeetCode", url: "https://leetcode.com/problems/n-queens/" },
+    { title: "Word Search", difficulty: "Medium", platform: "LeetCode", url: "https://leetcode.com/problems/word-search/" }
   ]
 };
 
+const GENERAL_FALLBACK_QUESTIONS = [
+  { title: "Two Sum", difficulty: "Easy" as const, platform: "LeetCode", url: "https://leetcode.com/problems/two-sum/" },
+  { title: "Reverse String", difficulty: "Easy" as const, platform: "LeetCode", url: "https://leetcode.com/problems/reverse-string/" },
+  { title: "Merge Sorted Array", difficulty: "Easy" as const, platform: "LeetCode", url: "https://leetcode.com/problems/merge-sorted-array/" },
+  { title: "Fibonacci Number", difficulty: "Easy" as const, platform: "LeetCode", url: "https://leetcode.com/problems/fibonacci-number/" },
+  { title: "Valid Parentheses", difficulty: "Easy" as const, platform: "LeetCode", url: "https://leetcode.com/problems/valid-parentheses/" },
+  { title: "Merge Two Sorted Lists", difficulty: "Easy" as const, platform: "LeetCode", url: "https://leetcode.com/problems/merge-two-sorted-lists/" },
+  { title: "Maximum Subarray", difficulty: "Medium" as const, platform: "LeetCode", url: "https://leetcode.com/problems/maximum-subarray/" },
+  { title: "Search Insert Position", difficulty: "Easy" as const, platform: "LeetCode", url: "https://leetcode.com/problems/search-insert-position/" }
+];
+
 const getFallbackQuestions = (patternName: string): Array<{ title: string; difficulty: "Easy" | "Medium" | "Hard"; platform: string; url: string }> => {
-  const norm = patternName.toLowerCase().trim();
+  const normPattern = patternName.toLowerCase()
+    .replace(/\b2\b/g, "two")
+    .replace(/\b1\b/g, "one")
+    .replace(/\b3\b/g, "three")
+    .replace(/[^a-z0-9]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+
   for (const k of Object.keys(DEFAULT_PATTERN_QUESTIONS)) {
-    if (norm.includes(k) || k.includes(norm)) {
+    const normKey = k.toLowerCase().replace(/[^a-z0-9]/g, " ").replace(/\s+/g, " ").trim();
+    if (normPattern.includes(normKey) || normKey.includes(normPattern)) {
       return DEFAULT_PATTERN_QUESTIONS[k];
     }
   }
-  return [
-    { title: `Leetcode 101: Basic ${patternName} Pattern Analysis`, difficulty: "Easy", platform: "LeetCode", url: "https://leetcode.com/" },
-    { title: `Leetcode 202: Intermediate ${patternName} Array Challenge`, difficulty: "Medium", platform: "LeetCode", url: "https://leetcode.com/" },
-    { title: `Leetcode 303: Advanced ${patternName} Optimization`, difficulty: "Hard", platform: "LeetCode", url: "https://leetcode.com/" },
-    { title: `Leetcode 404: Complex ${patternName} Substructure Search`, difficulty: "Medium", platform: "LeetCode", url: "https://leetcode.com/" },
-    { title: `Leetcode 505: ${patternName} Edge-Case Validation`, difficulty: "Hard", platform: "LeetCode", url: "https://leetcode.com/" }
-  ];
+  return GENERAL_FALLBACK_QUESTIONS;
 };
 
 export default function TestMaker() {
@@ -131,39 +213,75 @@ export default function TestMaker() {
       );
       const responses = await Promise.all(promises);
 
-      let pool: Array<{ title: string; difficulty: "Easy" | "Medium" | "Hard"; platform: string; url: string }> = [];
+      let solvedPool: Array<{ title: string; difficulty: "Easy" | "Medium" | "Hard"; platform: string; url: string }> = [];
+      let externalPool: Array<{ title: string; difficulty: "Easy" | "Medium" | "Hard"; platform: string; url: string }> = [];
 
       responses.forEach((res, index) => {
-        if (res.status === "success" && res.data?.questions) {
-          const userQuestions = res.data.questions.map((q: any) => ({
-            title: q.title,
-            difficulty: q.difficulty as "Easy" | "Medium" | "Hard",
-            platform: q.platform,
-            url: q.url || "https://leetcode.com/",
-          }));
-          pool = [...pool, ...userQuestions];
-        }
-
-        // If not enough questions logged in this pattern, supplement with standard practice pool questions
         const patternName = patterns.find((p) => p.id === selectedPatternIds[index])?.name || "";
+        
+        // Populate user's solved questions
+        if (res.status === "success" && res.data?.questions) {
+          const userQuestions = res.data.questions.map((q: any) => {
+            const hasRealUrl = q.url && q.url.trim() !== "" && q.url !== "https://leetcode.com/" && q.url !== "https://leetcode.com" && q.url !== "https://geeksforgeeks.org/" && q.url !== "https://geeksforgeeks.org" && q.url !== "#";
+            
+            // If the user's solved question has no URL or a generic placeholder, construct a clean LeetCode URL from the title
+            const resolvedUrl = hasRealUrl
+              ? q.url
+              : `https://leetcode.com/problems/${q.title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "")}/`;
+
+            return {
+              title: q.title,
+              difficulty: (q.difficulty || "Easy") as "Easy" | "Medium" | "Hard",
+              platform: q.platform || "LeetCode",
+              url: resolvedUrl,
+            };
+          });
+          solvedPool = [...solvedPool, ...userQuestions];
+        }
+
+        // Populate external resource questions for this pattern
         const fallbackSet = getFallbackQuestions(patternName);
-        pool = [...pool, ...fallbackSet];
+        externalPool = [...externalPool, ...fallbackSet];
       });
 
-      // Remove duplicate questions based on title
-      const uniquePool: typeof pool = [];
-      const seenTitles = new Set<string>();
-      pool.forEach((q) => {
+      // Remove duplicates by title in solvedPool
+      const uniqueSolved: typeof solvedPool = [];
+      const seenSolved = new Set<string>();
+      solvedPool.forEach((q) => {
         const cleanTitle = q.title.toLowerCase().trim();
-        if (!seenTitles.has(cleanTitle)) {
-          seenTitles.add(cleanTitle);
-          uniquePool.push(q);
+        if (!seenSolved.has(cleanTitle)) {
+          seenSolved.add(cleanTitle);
+          uniqueSolved.push(q);
         }
       });
 
-      // 2. Select 5 random questions from the unique pool
-      const shuffled = [...uniquePool].sort(() => 0.5 - Math.random());
-      const selected = shuffled.slice(0, 5).map((q) => ({
+      // Remove duplicates by title in externalPool
+      const uniqueExternal: typeof externalPool = [];
+      const seenExternal = new Set<string>();
+      externalPool.forEach((q) => {
+        const cleanTitle = q.title.toLowerCase().trim();
+        if (!seenExternal.has(cleanTitle)) {
+          seenExternal.add(cleanTitle);
+          uniqueExternal.push(q);
+        }
+      });
+
+      // 50% Solved + 50% External split selection logic:
+      // We aim for exactly 3 solved questions (if available) and 2 external ones (total 5).
+      // If solved pool has fewer than 3, we take all solved questions and fill the rest up to 5 with external questions.
+      const numSolvedToTake = Math.min(uniqueSolved.length, 3);
+      const numExternalToTake = 5 - numSolvedToTake;
+
+      const shuffledSolved = [...uniqueSolved].sort(() => 0.5 - Math.random());
+      const shuffledExternal = [...uniqueExternal].sort(() => 0.5 - Math.random());
+
+      const selectedSolved = shuffledSolved.slice(0, numSolvedToTake);
+      const selectedExternal = shuffledExternal.slice(0, numExternalToTake);
+
+      // Combine both lists and shuffle again
+      const combined = [...selectedSolved, ...selectedExternal].sort(() => 0.5 - Math.random());
+      
+      const selected = combined.map((q) => ({
         ...q,
         completed: false,
       }));
