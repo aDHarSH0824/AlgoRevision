@@ -323,7 +323,7 @@ if (rating === "Forgot") {
             <Link href="/docs" className="hover:text-on-dark transition-colors">Documentation</Link>
             <Link href="/privacy" className="hover:text-on-dark transition-colors">Privacy</Link>
             <Link href="/terms" className="hover:text-on-dark transition-colors">Terms</Link>
-            <a href="#" className="opacity-50 cursor-not-allowed text-on-dark-soft">Github</a>
+            <a href="https://github.com/aDHarSH0824/AlgoRevision" target="_blank" rel="noopener noreferrer" className="hover:text-on-dark transition-colors">Github</a>
           </div>
           <p className="text-[11px] text-on-dark-soft">
             © 2026 DSA Revision Hub. Built on warm-canvas.
