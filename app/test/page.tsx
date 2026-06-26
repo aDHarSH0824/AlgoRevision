@@ -157,6 +157,7 @@ export default function TestMaker() {
   const [showResults, setShowResults] = useState(false);
   const [finalTime, setFinalTime] = useState(0);
   const [score, setScore] = useState(0);
+  const [questionSource, setQuestionSource] = useState<"mix" | "solved" | "new">("mix");
 
   const fetchPatterns = async () => {
     try {
@@ -266,10 +267,15 @@ export default function TestMaker() {
         }
       });
 
-      // 50% Solved + 50% External split selection logic:
-      // We aim for exactly 3 solved questions (if available) and 2 external ones (total 5).
-      // If solved pool has fewer than 3, we take all solved questions and fill the rest up to 5 with external questions.
-      const numSolvedToTake = Math.min(uniqueSolved.length, 3);
+      // Determine question counts based on the chosen customization option:
+      let numSolvedToTake = 0;
+      if (questionSource === "mix") {
+        numSolvedToTake = Math.min(uniqueSolved.length, 3);
+      } else if (questionSource === "solved") {
+        numSolvedToTake = Math.min(uniqueSolved.length, 5);
+      } else if (questionSource === "new") {
+        numSolvedToTake = 0;
+      }
       const numExternalToTake = 5 - numSolvedToTake;
 
       const shuffledSolved = [...uniqueSolved].sort(() => 0.5 - Math.random());
@@ -392,6 +398,69 @@ export default function TestMaker() {
                 No patterns logged yet. Please create a pattern category first under the Patterns tab.
               </div>
             )}
+
+            <div className="border-t border-hairline-soft pt-6 flex flex-col gap-4">
+              <div>
+                <h2 className="text-sm font-bold uppercase tracking-wider text-muted mb-2">Step 2: Choose Question Source</h2>
+                <p className="text-xs text-body">Select where you want your practice questions to come from.</p>
+              </div>
+              
+              <div className="grid md:grid-cols-3 gap-4">
+                <label className={`p-4 border rounded-md cursor-pointer transition-all flex items-start gap-3 select-none ${
+                  questionSource === "mix"
+                    ? "bg-primary/5 border-primary"
+                    : "bg-canvas border-hairline hover:bg-surface-soft"
+                }`}>
+                  <input
+                    type="radio"
+                    name="questionSource"
+                    checked={questionSource === "mix"}
+                    onChange={() => setQuestionSource("mix")}
+                    className="w-4 h-4 text-primary focus:ring-primary cursor-pointer mt-0.5"
+                  />
+                  <div className="text-left">
+                    <span className="text-sm font-semibold text-body-strong block">Mixed (50/50 Split)</span>
+                    <span className="text-[10px] text-muted block mt-0.5 leading-normal">Half solved questions and half new ones</span>
+                  </div>
+                </label>
+
+                <label className={`p-4 border rounded-md cursor-pointer transition-all flex items-start gap-3 select-none ${
+                  questionSource === "solved"
+                    ? "bg-primary/5 border-primary"
+                    : "bg-canvas border-hairline hover:bg-surface-soft"
+                }`}>
+                  <input
+                    type="radio"
+                    name="questionSource"
+                    checked={questionSource === "solved"}
+                    onChange={() => setQuestionSource("solved")}
+                    className="w-4 h-4 text-primary focus:ring-primary cursor-pointer mt-0.5"
+                  />
+                  <div className="text-left">
+                    <span className="text-sm font-semibold text-body-strong block">Only Solved Problems</span>
+                    <span className="text-[10px] text-muted block mt-0.5 leading-normal">Pulls only questions you've logged previously</span>
+                  </div>
+                </label>
+
+                <label className={`p-4 border rounded-md cursor-pointer transition-all flex items-start gap-3 select-none ${
+                  questionSource === "new"
+                    ? "bg-primary/5 border-primary"
+                    : "bg-canvas border-hairline hover:bg-surface-soft"
+                }`}>
+                  <input
+                    type="radio"
+                    name="questionSource"
+                    checked={questionSource === "new"}
+                    onChange={() => setQuestionSource("new")}
+                    className="w-4 h-4 text-primary focus:ring-primary cursor-pointer mt-0.5"
+                  />
+                  <div className="text-left">
+                    <span className="text-sm font-semibold text-body-strong block">Only New Questions</span>
+                    <span className="text-[10px] text-muted block mt-0.5 leading-normal">Pulls only fresh questions from other resources</span>
+                  </div>
+                </label>
+              </div>
+            </div>
 
             <div className="border-t border-hairline-soft pt-4 flex justify-end">
               <button
