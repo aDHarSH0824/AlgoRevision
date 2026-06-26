@@ -13,5 +13,7 @@ router.post("/generate", validate(revisionGenerateSchema), controller.generateRe
 router.post("/submit/:questionId", validate(revisionSubmitSchema), controller.submitRevision as any);
 router.get("/heatmap", controller.getHeatmap as any);
 router.get("/stats", controller.getDashboardStats as any);
+router.post("/tests", controller.saveTestHistory as any);
+router.get("/tests", controller.getTestHistory as any);
 
 export default router;

@@ -83,6 +83,9 @@ export const api = {
       request<any>(`/revisions/submit/${questionId}`, { method: "POST", body: JSON.stringify({ rating }) }),
     getHeatmap: () => request<any>("/revisions/heatmap", { method: "GET" }),
     getStats: () => request<any>("/revisions/stats", { method: "GET" }),
+    saveTest: (body: { patterns: string[]; questions: any[]; score: number; totalQuestions: number; timeTaken: number }) => 
+      request<any>("/revisions/tests", { method: "POST", body: JSON.stringify(body) }),
+    getTestHistory: () => request<any>("/revisions/tests", { method: "GET" }),
   },
 
   // AI Integration

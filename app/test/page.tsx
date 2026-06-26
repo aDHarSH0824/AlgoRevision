@@ -158,6 +158,9 @@ export default function TestMaker() {
   const [finalTime, setFinalTime] = useState(0);
   const [score, setScore] = useState(0);
   const [questionSource, setQuestionSource] = useState<"mix" | "solved" | "new">("mix");
+  const [testLength, setTestLength] = useState<number>(5);
+  const [allowedDifficulties, setAllowedDifficulties] = useState<string[]>(["Easy", "Medium", "Hard"]);
+  const [testHistory, setTestHistory] = useState<any[]>([]);
 
   const fetchPatterns = async () => {
     try {
@@ -175,8 +178,20 @@ export default function TestMaker() {
     }
   };
 
+  const fetchHistory = async () => {
+    try {
+      const res = await api.revisions.getTestHistory();
+      if (res.status === "success" && res.data?.history) {
+        setTestHistory(res.data.history);
+      }
+    } catch (err) {
+      console.error("Failed to fetch test history:", err);
+    }
+  };
+
   useEffect(() => {
     fetchPatterns();
+    fetchHistory();
   }, []);
 
   // Timer runner
@@ -267,19 +282,25 @@ export default function TestMaker() {
         }
       });
 
-      // Determine question counts based on the chosen customization option:
-      let numSolvedToTake = 0;
-      if (questionSource === "mix") {
-        numSolvedToTake = Math.min(uniqueSolved.length, 3);
-      } else if (questionSource === "solved") {
-        numSolvedToTake = Math.min(uniqueSolved.length, 5);
-      } else if (questionSource === "new") {
-        numSolvedToTake = 0;
-      }
-      const numExternalToTake = 5 - numSolvedToTake;
+      // Filter pools by allowed difficulties
+      const filteredSolved = uniqueSolved.filter((q) => allowedDifficulties.includes(q.difficulty));
+      const filteredExternal = uniqueExternal.filter((q) => allowedDifficulties.includes(q.difficulty));
 
-      const shuffledSolved = [...uniqueSolved].sort(() => 0.5 - Math.random());
-      const shuffledExternal = [...uniqueExternal].sort(() => 0.5 - Math.random());
+      // Determine question counts based on the chosen customization option:
+      let targetSolved = 0;
+      if (questionSource === "mix") {
+        targetSolved = Math.ceil(testLength * 0.6);
+      } else if (questionSource === "solved") {
+        targetSolved = testLength;
+      } else if (questionSource === "new") {
+        targetSolved = 0;
+      }
+
+      const numSolvedToTake = Math.min(filteredSolved.length, targetSolved);
+      const numExternalToTake = testLength - numSolvedToTake;
+
+      const shuffledSolved = [...filteredSolved].sort(() => 0.5 - Math.random());
+      const shuffledExternal = [...filteredExternal].sort(() => 0.5 - Math.random());
 
       const selectedSolved = shuffledSolved.slice(0, numSolvedToTake);
       const selectedExternal = shuffledExternal.slice(0, numExternalToTake);
@@ -310,11 +331,36 @@ export default function TestMaker() {
     );
   };
 
-  const handleSubmitTest = () => {
+  const handleSubmitTest = async () => {
     const finalScore = testQuestions.filter((q) => q.completed).length;
     setScore(finalScore);
     setFinalTime(timeElapsed);
     setShowResults(true);
+
+    try {
+      const selectedPatterns = selectedPatternIds
+        .map((id) => patterns.find((p) => p.id === id)?.name)
+        .filter(Boolean) as string[];
+
+      await api.revisions.saveTest({
+        patterns: selectedPatterns,
+        questions: testQuestions.map((q) => ({
+          title: q.title,
+          difficulty: q.difficulty,
+          platform: q.platform,
+          url: q.url,
+          completed: q.completed,
+        })),
+        score: finalScore,
+        totalQuestions: testQuestions.length,
+        timeTaken: timeElapsed,
+      });
+
+      // Refresh the test history list
+      fetchHistory();
+    } catch (err) {
+      console.error("Failed to save mock test history:", err);
+    }
   };
 
   const handleResetTest = () => {
@@ -357,7 +403,8 @@ export default function TestMaker() {
           </div>
         ) : !testActive ? (
           /* Selection Screen */
-          <section className="bg-surface-card border border-hairline rounded-lg p-6 flex flex-col gap-6 text-left">
+          <>
+            <section className="bg-surface-card border border-hairline rounded-lg p-6 flex flex-col gap-6 text-left">
             <div>
               <h2 className="text-sm font-bold uppercase tracking-wider text-muted mb-2">Step 1: Select Patterns</h2>
               <p className="text-xs text-body">Choose one or more study topics. We will compose a 5-question test containing random questions from these patterns.</p>
@@ -462,16 +509,138 @@ export default function TestMaker() {
               </div>
             </div>
 
+            <div className="border-t border-hairline-soft pt-6 grid sm:grid-cols-2 gap-8">
+              {/* Length Selector */}
+              <div>
+                <h2 className="text-sm font-bold uppercase tracking-wider text-muted mb-2">Step 3: Set Test Length</h2>
+                <p className="text-xs text-body mb-4">Choose how many questions to generate for this test.</p>
+                
+                <div className="flex gap-2">
+                  {[5, 10, 15, 20].map((len) => (
+                    <button
+                      key={len}
+                      type="button"
+                      onClick={() => setTestLength(len)}
+                      className={`flex-grow py-2 border rounded text-xs font-semibold transition-all cursor-pointer ${
+                        testLength === len
+                          ? "bg-primary border-primary text-on-primary shadow-sm font-bold"
+                          : "bg-canvas border-hairline hover:bg-surface-soft text-muted hover:text-ink"
+                      }`}
+                    >
+                      {len} Qs
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Difficulty Selection */}
+              <div>
+                <h2 className="text-sm font-bold uppercase tracking-wider text-muted mb-2">Step 4: Select Difficulties</h2>
+                <p className="text-xs text-body mb-4">Allow questions matching these difficulty ratings.</p>
+                
+                <div className="flex gap-4">
+                  {["Easy", "Medium", "Hard"].map((diff) => {
+                    const isSelected = allowedDifficulties.includes(diff);
+                    const handleToggleDiff = () => {
+                      setAllowedDifficulties((prev) => {
+                        if (isSelected) {
+                          if (prev.length === 1) return prev;
+                          return prev.filter((d) => d !== diff);
+                        } else {
+                          return [...prev, diff];
+                        }
+                      });
+                    };
+
+                    return (
+                      <label
+                        key={diff}
+                        className={`flex-grow flex items-center justify-center gap-2 py-2 border rounded text-xs font-semibold cursor-pointer transition-all select-none ${
+                          isSelected
+                            ? "bg-primary/5 border-primary text-body-strong font-bold"
+                            : "bg-canvas border-hairline hover:bg-surface-soft text-muted"
+                        }`}
+                      >
+                        <input
+                          type="checkbox"
+                          checked={isSelected}
+                          onChange={handleToggleDiff}
+                          className="w-3.5 h-3.5 rounded border-hairline text-primary focus:ring-primary cursor-pointer"
+                        />
+                        {diff}
+                      </label>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+
             <div className="border-t border-hairline-soft pt-4 flex justify-end">
               <button
                 onClick={handleGenerateTest}
                 disabled={patterns.length === 0 || selectedPatternIds.length === 0}
                 className="px-6 py-2.5 bg-primary hover:bg-primary-active text-on-primary disabled:bg-primary-disabled text-sm font-semibold rounded-md shadow-sm transition-all duration-150 cursor-pointer"
               >
-                Generate 5-Question Test
+                Generate {testLength}-Question Test
               </button>
             </div>
           </section>
+
+          {/* Mock Test History Timeline */}
+          {!testActive && testHistory.length > 0 && (
+            <section className="bg-surface-card border border-hairline rounded-lg p-6 flex flex-col gap-5 text-left">
+              <div>
+                <h2 className="text-sm font-bold uppercase tracking-wider text-muted">Mock Test History</h2>
+                <p className="text-xs text-body mt-0.5">Timeline of your past revision tests and scores.</p>
+              </div>
+
+              <div className="flex flex-col gap-4">
+                {testHistory.slice(0, 8).map((test: any) => (
+                  <div key={test._id} className="p-4 bg-canvas border border-hairline-soft rounded-md flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div className="flex flex-col gap-1.5 text-left">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <span className="text-xs font-semibold text-body-strong">
+                          {test.patterns.join(", ")}
+                        </span>
+                        <span className="text-[9px] text-muted font-bold block bg-surface-soft border border-hairline px-2 py-0.5 rounded">
+                          {test.totalQuestions} Questions
+                        </span>
+                      </div>
+                      <span className="text-[10px] text-muted font-medium">
+                        Completed on {new Date(test.createdAt).toLocaleDateString(undefined, {
+                          month: "short",
+                          day: "numeric",
+                          year: "numeric",
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        })}
+                      </span>
+                    </div>
+
+                    <div className="flex items-center gap-6">
+                      <div className="text-left sm:text-right">
+                        <span className="text-[9px] text-muted font-bold block uppercase tracking-wider">Score</span>
+                        <span className={`text-base font-bold block mt-0.5 ${
+                          test.score === test.totalQuestions ? "text-success" :
+                          test.score >= test.totalQuestions * 0.6 ? "text-primary" : "text-ink"
+                        }`}>
+                          {test.score} / {test.totalQuestions}
+                        </span>
+                      </div>
+
+                      <div className="text-left sm:text-right">
+                        <span className="text-[9px] text-muted font-bold block uppercase tracking-wider">Time</span>
+                        <span className="text-sm font-mono font-bold text-body-strong block mt-0.5">
+                          {formatTime(test.timeTaken)}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+          </>
         ) : (
           /* Live Test Screen */
           <section className="flex flex-col gap-6 text-left">

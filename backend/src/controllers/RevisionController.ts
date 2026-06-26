@@ -1,6 +1,7 @@
 import { Response, NextFunction } from "express";
 import { QuestionRepository } from "../repositories/QuestionRepository";
 import { RevisionRepository } from "../repositories/RevisionRepository";
+import { TestHistoryRepository } from "../repositories/TestHistoryRepository";
 import { SpacedRepetitionService } from "../services/SpacedRepetitionService";
 import { NotFoundError } from "../utils/errors";
 import { AuthenticatedRequest } from "../middlewares/authMiddleware";
@@ -9,6 +10,7 @@ import { Question } from "../models/Question";
 const questionRepository = new QuestionRepository();
 const revisionRepository = new RevisionRepository();
 const srsService = new SpacedRepetitionService();
+const testHistoryRepository = new TestHistoryRepository();
 
 export class RevisionController {
   async generateRevisionSet(req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> {
@@ -134,6 +136,43 @@ export class RevisionController {
           weakPatterns,
           distribution,
         },
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async saveTestHistory(req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const userId = req.user!.id;
+      const { patterns, questions, score, totalQuestions, timeTaken } = req.body;
+
+      const testRecord = await testHistoryRepository.create({
+        userId: userId as any,
+        patterns,
+        questions,
+        score,
+        totalQuestions,
+        timeTaken,
+      });
+
+      res.status(201).json({
+        status: "success",
+        data: { testRecord },
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async getTestHistory(req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const userId = req.user!.id;
+      const history = await testHistoryRepository.findByUser(userId);
+
+      res.status(200).json({
+        status: "success",
+        data: { history },
       });
     } catch (error) {
       next(error);
